@@ -40,6 +40,7 @@ var dashing_speed = 800
 # --- 狀態控制 ---
 var can_move = true  # 用於對話/過場時鎖定操作
 var is_bound: bool = false # 蜘蛛束縛
+var is_dead: bool = false
 
 # --- 長按顯示可互動物體 ---
 signal detect_interactable # 定義長按觸發的訊號
@@ -55,8 +56,10 @@ func _ready():
 	recover_hp = max_hp
 	DialogueManager.dialogue_started.connect(_on_dialogue_started)
 	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
-	StoryManager.play_new_game_sequence() # start story 
+	# StoryManager.play_new_game_sequence() # start story 
 	# fall_rock.spawn_fall_rock(self, 1.0, 2.0, 1.0, 10)
+	
+	StoryManager.update_checkpoint(global_position)
 	
 
 func _physics_process(delta: float) -> void:
@@ -281,22 +284,35 @@ func add_ghost():
 
 # --- 受傷與死亡 ---
 func take_damage(amount, source_position, level: int = 100):
+	print("call take_damage")
 	current_hp -= amount
 	recover_hp -= amount
 	emit_signal("hp_changed", current_hp)
 	emit_signal("recover_hp_changed", recover_hp)
 	
+	print("結束：current_hp: " , current_hp , " recover_hp: " , recover_hp)
 	var knockback_dir = (global_position - source_position).normalized()
 	velocity = knockback_dir * level
 	move_and_slide()
 
+func hp_change(val: int, type: String = "normal"):
+	if current_hp < max_hp and type == "recover":
+		recover_hp += val
+		emit_signal("recover_hp_changed", recover_hp)
+	if current_hp < max_hp and current_hp < recover_hp and type == "normal":
+		current_hp += val
+		emit_signal("hp_changed", current_hp)
+
 func die():
+	if is_dead:
+		return
+	is_dead = true
 	emit_signal("player_died")
 	
 	# 這裡放置死亡動畫呼叫
 	await play_implosion_death_animation()
 	
-	SceneTransition.change_scene("res://title_screen.tscn")
+	StoryManager.play_death_sequence()
 
 func _on_natural_recover_timer_timeout() -> void:
 	if current_hp < min(max_hp, recover_hp):
@@ -377,13 +393,54 @@ func play_hitEffect(pos: Vector2):
 	current_effect.global_position = pos
 	get_tree().current_scene.add_child(current_effect)
 
-func hp_change(val: int, type: String = "normal"):
-	if current_hp < max_hp and type == "recover":
-		recover_hp += val
-		emit_signal("recover_hp_changed", recover_hp)
-	if current_hp < max_hp and current_hp < recover_hp and type == "normal":
-		current_hp += val
-		emit_signal("hp_changed", current_hp)
+func reset_hp(): 
+	print("正在執行玩家復活程序...")
+	
+	# 1. 數值重置
+	current_hp = max_hp
+	recover_hp = max_hp
+	emit_signal("hp_changed", max_hp)
+	emit_signal("recover_hp_changed", max_hp)
+	
+	# 2. 狀態旗標重置
+	is_dead = false
+	is_trembling = false
+	is_bound = false
+	can_move = true
+	
+	# 3. 視覺重置 (這是對應死亡動畫的還原)
+	$Sprite2D.visible = true
+	$Sprite2D.scale = Vector2.ONE
+	$Sprite2D.position = Vector2.ZERO # 確保抖動造成的位移歸零
+	$Sprite2D.modulate = Color.WHITE # 如果有變色，還原
+	
+	# 4. 物理與碰撞重置
+	velocity = Vector2.ZERO
+	set_physics_process(true) # 重新啟用物理循環
+	$CollisionShape2D.set_deferred("disabled", false) # 重新啟用碰撞
+	
+	# 5. 能力鎖還原 (依照解鎖狀態還原，而非全部打開)
+	# 這裡很重要：我們不是設為 true，而是設為「目前應該有的狀態」
+	# 假設死亡不會導致能力遺失，這裡其實可以不用動，
+	# 但因為你在 die() 裡面把它們全設 false 了，所以這裡必須還原。
+	# 為了避免邏輯錯誤，建議在 die() 裡面使用一個暫存變數，或是直接修改 die() 不要動這些開關
+	
+	# 修正方案 A：直接手動設回 true (如果你確定死前都已經解鎖了)
+	# can_dash_ability = true
+	# can_attack_ability = true
+	# can_sonar_ability = true
+	
+	# 修正方案 B (推薦)：讀取 save() 的邏輯來還原
+	# 由於你在 die() 把變數改掉了，最好的方式其實是不要在 die() 改這些永久變數，
+	# 而是用一個 `is_dying` 旗標在 _physics_process 擋住操作。
+	
+	# 但為了配合你目前的架構，我們先暫時全部開啟 (或是你可以設計一個 temp 變數存起來)
+	# 假設遊戲進度是線性的，復活時這些能力應該都要能用：
+	can_dash_ability = true # 這裡依據你的遊戲設計決定是否要還原
+	can_attack_ability = true
+	can_sonar_ability = true
+	
+	print("玩家狀態已完全重置")
 
 # --- 抖動控制函式 ---
 # level: 抖動幅度 (像素偏移量)
@@ -421,28 +478,28 @@ func start_tremble(level: float, duration: float, lock_player: bool = false):
 	is_trembling = false
 	$Sprite2D.position = Vector2.ZERO
 
+# --- 死亡動畫微調 ---
 func play_implosion_death_animation() -> void:
-	# 1. 鎖定玩家操作與物理 (避免死亡後還能滑動或被打)
+	# 1. 鎖定玩家操作與物理
 	set_physics_process(false)
-	can_dash_ability = false   # 衝刺能力 (石頭瞬移)
-	can_attack_ability = false # 攻擊能力 (丟石頭)
-	can_sonar_ability = false   # 聲納能力 (預設開啟，否則一開始全黑很難玩)
 	
+	# 【建議修改】不要在這裡修改 can_..._ability 這些永久屬性
+	# 因為這些屬性代表「玩家是否學會了這招」，而不是「現在能不能用」
+	# 你已經把 set_physics_process 關了，玩家根本動不了，所以不用動這些變數。
+	# can_dash_ability = false  <-- 建議移除
+	# can_attack_ability = false <-- 建議移除
+	# can_sonar_ability = false  <-- 建議移除
 	
 	velocity = Vector2.ZERO
-	# 如果有碰撞體，建議也關閉，避免屍體擋路
 	$CollisionShape2D.set_deferred("disabled", true) 
 	
 	var tween = create_tween()
 	
-	# --- 階段 A: 內爆 (Implosion) ---
-	# 使用 TRANS_BACK + EASE_IN 做出「先稍微放大一點點再急速縮小」的吸入感
-	# 時間極短 (0.15秒)
+	# --- 階段 A: 內爆 ---
 	tween.tween_property($Sprite2D, "scale", Vector2(0.0, 0.0), 0.5)\
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_IN)
 	
-	# --- 階段 B: 碎裂 (Explosion) ---
-	# 內爆結束的瞬間，隱藏本體，並啟動粒子
+	# --- 階段 B: 碎裂 ---
 	tween.tween_callback(func():
 		$Sprite2D.visible = false
 		if has_node("DeathParticles"):
@@ -450,6 +507,5 @@ func play_implosion_death_animation() -> void:
 	)
 	
 	# --- 階段 C: 等待 ---
-	# 等待粒子噴發完畢 (配合粒子的 Lifetime，例如 0.6 ~ 1.0 秒)
 	await tween.finished
 	await get_tree().create_timer(1.2).timeout

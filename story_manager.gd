@@ -8,6 +8,14 @@ extends Node
 # 請將這裡換成你的機械音效路徑
 var machine_sfx# = preload("res://sfx/machine_hum.wav") 
 
+# --- 新增變數：紀錄重生點 ---
+# 預設為 (0,0)，建議在 Player _ready 時呼叫 update_checkpoint 更新一次
+var current_checkpoint_pos: Vector2 = Vector2.ZERO
+
+func update_checkpoint(new_pos: Vector2):
+	current_checkpoint_pos = new_pos
+	print("存檔點已更新: ", current_checkpoint_pos)
+
 func _ready():
 	# 遊戲開始時先隱藏 UI 層，以免擋住編輯器畫面
 	cutscene_layer.visible = false
@@ -152,6 +160,83 @@ func play_new_game_sequence():
 		print("劇情結束，玩家甦醒，聲納已發射")
 	if health_bar :
 		health_bar.visible = true
+		
+	
+func play_death_sequence():
+	var player = get_tree().get_first_node_in_group("player")
+	var health_bar = get_tree().get_first_node_in_group("health_bar")
+	
+	print("播放死亡動畫...")
+
+	# 1. 鎖定玩家操作 & 隱藏 UI
+	if player:
+		player.can_move = false
+		player.velocity = Vector2.ZERO # 停止移動
+		player.can_sonar_ability = false # 禁止死掉時亂發光
+		# 如果你的 Player 有無敵狀態變數，建議在這裡開啟，以免黑幕中被怪打
+		if "is_invincible" in player: player.is_invincible = true
+			
+	if health_bar:
+		health_bar.visible = false
+
+	# 2. 畫面漸暗 (Fade Out)
+	cutscene_layer.visible = true
+	overlay_screen.color = Color.BLACK 
+	overlay_screen.modulate.a = 0.0 # 從透明開始
+	
+	var tween = create_tween()
+	# 1.5秒內變全黑
+	tween.tween_property(overlay_screen, "modulate:a", 1.0, 1.5)
+	
+	await tween.finished
+	
+	# 3. 播放死亡獨白 (可自訂)
+	var death_lines = [
+		{"text": "到此為止了嗎......", "time": 2.0},
+		{"text": "[color=red]『允你復活。』[/color]", "time": 2.0},
+		{"text": "必須......再試一次。", "time": 2.0}
+	]
+	
+	DialogueManager.set_name_label("") # 不需要名字
+	DialogueManager.start_auto_dialogue(death_lines, "")
+	
+	await DialogueManager.dialogue_finished
+	
+	# 4. 執行復活邏輯 (在黑幕遮擋下進行)
+	if player:
+		# 重置位置
+		player.global_position = current_checkpoint_pos
+		
+		# 重置血量 (假設你的 Player 有 reset_hp 或類似函式)
+		if player.has_method("reset_hp"):
+			player.reset_hp()
+		else:
+			print("cannot reset hp")
+
+		# 重置無敵狀態
+		if "is_invincible" in player: player.is_invincible = false
+		
+		# 如果場上有需要重置的敵人或機關，可以在這裡發送訊號
+		# get_tree().call_group("enemies", "reset_position") 
+
+	# 稍作停頓，讓玩家準備好
+	await get_tree().create_timer(1.0).timeout
+
+	# 5. 畫面漸亮 (Fade In)
+	var tween_in = create_tween()
+	tween_in.tween_property(overlay_screen, "modulate:a", 0.0, 1.5) # 1.5秒變透明
+	
+	await tween_in.finished
+	
+	# 6. 恢復遊戲控制
+	cutscene_layer.visible = false # 隱藏遮罩層
+	if health_bar: health_bar.visible = true
+	
+	if player:
+		player.can_move = true
+		player.can_sonar_ability = true
+		print("玩家已復活")
+
 # --- 輔助函式 ---
 func wait_input(duration: float) -> bool:
 	var t = 0.0

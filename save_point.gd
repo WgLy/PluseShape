@@ -29,6 +29,7 @@ func _process(delta):
 func _on_body_entered(body):
 	print("進入存檔點")
 	if body.is_in_group("player"):
+		StoryManager.update_checkpoint(global_position)
 		player_in_area = body
 
 func _on_body_exited(body):

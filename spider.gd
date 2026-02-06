@@ -203,7 +203,7 @@ func _handle_qte_result(is_success: bool):
 		play_hitEffect(target_player.global_position)
 	else:
 		print("QTE 失敗！受傷！")
-		if target_player.has_method("take_damage"):
+		if target_player and target_player.has_method("take_damage"):
 			target_player.take_damage(bind_damage, self.global_position)
 		
 		await get_tree().create_timer(1.0).timeout
