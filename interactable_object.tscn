@@ -1,0 +1,64 @@
+[gd_scene load_steps=11 format=3 uid="uid://7tf6ha12hwh5"]
+
+[ext_resource type="Script" uid="uid://ct1v0rf0gr1e1" path="res://interactable_object.gd" id="1_4n3oy"]
+[ext_resource type="PackedScene" uid="uid://bk1sgujwf0wk3" path="res://speech_bubble.tscn" id="1_bcilo"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4n3oy"]
+radius = 20.024984
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4n3oy"]
+light_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_fr06r"]
+offsets = PackedFloat32Array(0, 0.62666667, 0.68666667, 0.74666667, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.16470589, 0.90588236, 0.16470589, 0, 0.18039216, 1, 0.18039216, 1, 0.20705882, 0.20705882, 0.20705882, 0, 0.43137255, 0.43137255, 0.43137255, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gci1n"]
+gradient = SubResource("Gradient_fr06r")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_cgf6v"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mlyqo"]
+gradient = SubResource("Gradient_cgf6v")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jrfns"]
+size = Vector2(16, 16)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_lqf20"]
+polygon = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
+
+[node name="interactable_object" type="Node2D" node_paths=PackedStringArray("hint")]
+script = ExtResource("1_4n3oy")
+hint = NodePath("Hint")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("CircleShape2D_4n3oy")
+
+[node name="SpeechBubble" parent="." instance=ExtResource("1_bcilo")]
+
+[node name="Hint" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_4n3oy")
+scale = Vector2(0.2, 0.2)
+texture = SubResource("GradientTexture2D_gci1n")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="CharacterBody2D"]
+scale = Vector2(0.25, 0.25)
+texture = SubResource("GradientTexture2D_mlyqo")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CharacterBody2D"]
+shape = SubResource("RectangleShape2D_jrfns")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="CharacterBody2D"]
+occluder = SubResource("OccluderPolygon2D_lqf20")
+
+[connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

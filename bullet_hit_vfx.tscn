@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c87366wd2ie3f"]
+
+[ext_resource type="Script" uid="uid://cwag5gu6mawb2" path="res://bullet_hit_vfx.gd" id="1_cn5f4"]
+
+[node name="BulletHitVFX" type="CPUParticles2D"]
+emitting = false
+one_shot = true
+explosiveness = 1.0
+script = ExtResource("1_cn5f4")

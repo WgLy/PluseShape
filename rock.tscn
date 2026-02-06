@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://c3frap38qyqun"]
+
+[ext_resource type="Script" uid="uid://pnfq5euqcw6q" path="res://rock.gd" id="1_68h2w"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_46y1q"]
+size = Vector2(4, 4)
+
+[sub_resource type="Gradient" id="Gradient_o0qsl"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_68h2w"]
+gradient = SubResource("Gradient_o0qsl")
+fill = 2
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_o54ku"]
+radius = 11.0
+
+[node name="Rock" type="CharacterBody2D" groups=["pushable", "rocks"]]
+collision_layer = 4
+script = ExtResource("1_68h2w")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_46y1q")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(0.062499996, 0.062499996)
+texture = SubResource("GradientTexture2D_68h2w")
+
+[node name="PickupArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PickupArea"]
+shape = SubResource("CircleShape2D_o54ku")
+
+[node name="SonarTimer" type="Timer" parent="."]
+wait_time = 1.5
+autostart = true
+
+[connection signal="body_entered" from="PickupArea" to="." method="_on_pickup_area_body_entered"]
+[connection signal="body_exited" from="PickupArea" to="." method="_on_pickup_area_body_exited"]
+[connection signal="timeout" from="SonarTimer" to="." method="_on_sonar_timer_timeout"]

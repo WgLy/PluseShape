@@ -1,0 +1,33 @@
+[gd_scene load_steps=7 format=3 uid="uid://sfqw0yq1gtjf"]
+
+[ext_resource type="Script" uid="uid://x6fbflba2eym" path="res://hit_effect.gd" id="1_r4b7x"]
+[ext_resource type="Script" uid="uid://dy23ukyrm2c21" path="res://circle_particle.gd" id="2_gh0va"]
+
+[sub_resource type="Gradient" id="Gradient_gx1rw"]
+offsets = PackedFloat32Array(0.32, 1)
+colors = PackedColorArray(1, 1, 1, 1, 0, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_r4b7x"]
+gradient = SubResource("Gradient_gx1rw")
+fill = 2
+fill_from = Vector2(0.5140187, 0.5046729)
+fill_to = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_gh0va"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_k0crp"]
+gradient = SubResource("Gradient_gh0va")
+fill = 1
+
+[node name="HitEffect" type="Node2D"]
+script = ExtResource("1_r4b7x")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+visible = false
+texture = SubResource("GradientTexture2D_r4b7x")
+
+[node name="circle_particle" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = SubResource("GradientTexture2D_k0crp")
+script = ExtResource("2_gh0va")

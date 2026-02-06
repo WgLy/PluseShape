@@ -1,0 +1,6 @@
+[gd_resource type="Theme" load_steps=2 format=3 uid="uid://oykjxhwr5qx4"]
+
+[ext_resource type="FontFile" uid="uid://pkg8wsl8xr10" path="res://Fonts/LXGW_WenKai_TC/LXGWWenKaiTC-Bold.ttf" id="1_touxu"]
+
+[resource]
+default_font = ExtResource("1_touxu")

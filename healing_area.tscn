@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://j5g8e821bmnc"]
+
+[ext_resource type="Script" uid="uid://bdv2ehdom6004" path="res://healing_area.gd" id="1_yt0y6"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4xofm"]
+radius = 32.01562
+
+[sub_resource type="Gradient" id="Gradient_aua26"]
+offsets = PackedFloat32Array(0, 0.18666667, 0.74)
+colors = PackedColorArray(0.42352942, 0.60784316, 1, 0.78431374, 0.7176471, 0.80784315, 1, 0.78431374, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uq02c"]
+gradient = SubResource("Gradient_aua26")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="HealingArea" type="Area2D" node_paths=PackedStringArray("timer")]
+script = ExtResource("1_yt0y6")
+timer = NodePath("Timer")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_4xofm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_uq02c")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

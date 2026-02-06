@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://dpkmjai0e8mon"]
+
+[ext_resource type="Script" uid="uid://t7xsg4djfuyt" path="res://collide_button.gd" id="1_vv6sl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fvl60"]
+size = Vector2(230, 80)
+
+[sub_resource type="Gradient" id="Gradient_vv6sl"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ib7f2"]
+gradient = SubResource("Gradient_vv6sl")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ha4e3"]
+size = Vector2(212, 64)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_gdgnd"]
+polygon = PackedVector2Array(-97, 0, -97, 55, 96, 55, 96, 0)
+
+[node name="collideButton" type="Node2D"]
+script = ExtResource("1_vv6sl")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+position = Vector2(0, 40)
+shape = SubResource("RectangleShape2D_fvl60")
+
+[node name="collidebutton" type="CharacterBody2D" parent="."]
+
+[node name="Sprite2D" type="Sprite2D" parent="collidebutton"]
+position = Vector2(0, 32)
+scale = Vector2(3.3125, 1)
+texture = SubResource("GradientTexture2D_ib7f2")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="collidebutton"]
+position = Vector2(0, 32)
+shape = SubResource("RectangleShape2D_ha4e3")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="collidebutton"]
+occluder = SubResource("OccluderPolygon2D_gdgnd")
+
+[connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

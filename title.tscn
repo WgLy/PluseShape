@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://b68nve6f3x6nm"]
+
+[ext_resource type="Script" uid="uid://b65a6bots4vbi" path="res://title.gd" id="1_y7k74"]
+
+[node name="title" type="CanvasLayer"]
+script = ExtResource("1_y7k74")
+
+[node name="titleWords" type="RichTextLabel" parent="."]
+custom_minimum_size = Vector2(500, 100)
+offset_left = 710.0
+offset_top = 100.0
+offset_right = 1210.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_font_sizes/normal_font_size = 50
+theme_override_font_sizes/bold_font_size = 50
+theme_override_font_sizes/bold_italics_font_size = 50
+theme_override_font_sizes/italics_font_size = 50
+theme_override_font_sizes/mono_font_size = 50
+bbcode_enabled = true
+text = "實驗室"
+fit_content = true
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="underLine" type="Line2D" parent="."]
+position = Vector2(710, 200)
+points = PackedVector2Array(0, 0, 500, 0)
+width = 5.0

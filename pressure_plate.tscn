@@ -1,0 +1,72 @@
+[gd_scene load_steps=11 format=3 uid="uid://dbdffggqfg42r"]
+
+[ext_resource type="Script" uid="uid://b6tnfnmpqwwfh" path="res://pressure_plate.gd" id="1_uot4y"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k6yph"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_djmga"]
+offsets = PackedFloat32Array(0, 0.36, 0.74, 0.88, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.27387273, 0.27387276, 0.2738727, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ec6ob"]
+gradient = SubResource("Gradient_djmga")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_uot4y"]
+offsets = PackedFloat32Array(0, 0.74, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8bqyo"]
+gradient = SubResource("Gradient_uot4y")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_k6yph"]
+offsets = PackedFloat32Array(0, 0.88666666, 0.91333336, 1)
+colors = PackedColorArray(1, 1, 1, 0.09019608, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uot4y"]
+gradient = SubResource("Gradient_k6yph")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_8bqyo"]
+offsets = PackedFloat32Array(0, 0.9266667, 0.96, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.57254905, 0.57254905, 0.57254905, 0, 1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_djmga"]
+gradient = SubResource("Gradient_8bqyo")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
+[node name="pressurePlate" type="Node2D" node_paths=PackedStringArray("image_notPressed", "pressEffect", "pressEffect2")]
+script = ExtResource("1_uot4y")
+image_notPressed = NodePath("CharacterBody2D/image_notPressed")
+pressEffect = NodePath("pressEffect")
+pressEffect2 = NodePath("pressEffect2")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("RectangleShape2D_k6yph")
+
+[node name="CharacterBody2D" type="CharacterBody2D" parent="."]
+
+[node name="image_pressed" type="Sprite2D" parent="CharacterBody2D"]
+texture = SubResource("GradientTexture2D_ec6ob")
+
+[node name="image_notPressed" type="Sprite2D" parent="CharacterBody2D"]
+texture = SubResource("GradientTexture2D_8bqyo")
+
+[node name="pressEffect" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_uot4y")
+
+[node name="pressEffect2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_djmga")
+
+[connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

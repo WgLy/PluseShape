@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://oqg5yu7a6ose"]
+
+[ext_resource type="Script" uid="uid://ces22bc6fryqe" path="res://BOSS_chapter1/crystal.gd" id="1_200vn"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ciuc"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_qnnno"]
+offsets = PackedFloat32Array(0, 0.50666666, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_gggq8"]
+gradient = SubResource("Gradient_qnnno")
+
+[sub_resource type="Gradient" id="Gradient_ehlct"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_l1lc5"]
+gradient = SubResource("Gradient_ehlct")
+
+[node name="Crystal" type="StaticBody2D" groups=["DestructiableObjects"]]
+collision_layer = 8
+script = ExtResource("1_200vn")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_7ciuc")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_gggq8")
+
+[node name="BrokenSprite" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_l1lc5")
+
+[node name="RegenTimer" type="Timer" parent="."]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

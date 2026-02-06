@@ -1,0 +1,131 @@
+[gd_scene load_steps=13 format=3 uid="uid://yskocq1beqfd"]
+
+[ext_resource type="Script" uid="uid://dcufrywuj3fpv" path="res://weapon.gd" id="1_swcir"]
+[ext_resource type="Texture2D" uid="uid://lnb8iv5k8rgu" path="res://AttackEffect/AttackEffect6.png" id="2_ymrta"]
+[ext_resource type="Texture2D" uid="uid://idt82ia7nimu" path="res://AttackEffect/AttackEffect1.png" id="3_iymim"]
+[ext_resource type="Texture2D" uid="uid://kksvurvn8wmp" path="res://AttackEffect/AttackEffect2.png" id="4_w0tex"]
+[ext_resource type="Texture2D" uid="uid://dxsw8cnj0wykw" path="res://AttackEffect/AttackEffect3.png" id="5_q24d8"]
+[ext_resource type="Texture2D" uid="uid://d1mm1f4g68hny" path="res://AttackEffect/AttackEffect4.png" id="6_6cmx2"]
+[ext_resource type="Texture2D" uid="uid://dm42stj8dwmxs" path="res://AttackEffect/AttackEffect5.png" id="7_j5syt"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_div1a"]
+
+[sub_resource type="Animation" id="Animation_o2wld"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlashEffect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("hitbox/CollisionShape2D:disabled")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_ff8w7"]
+resource_name = "attack"
+length = 0.15
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("SlashEffect:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.012624496, 0.025735594, 0.060182925, 0.07319288, 0.12057487),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_iymim"), ExtResource("4_w0tex"), ExtResource("5_q24d8"), ExtResource("6_6cmx2"), ExtResource("7_j5syt"), ExtResource("2_ymrta")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SlashEffect:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.1493962),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SlashEffect:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.020212853, 0.12049983, 0.1493962),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1), Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("hitbox/CollisionShape2D:disabled")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 0.033333335, 0.073397025, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [true, false, true, true]
+}
+
+[sub_resource type="Animation" id="Animation_swcir"]
+resource_name = "swing"
+length = 0.2
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_8xwfw"]
+_data = {
+&"RESET": SubResource("Animation_o2wld"),
+&"attack": SubResource("Animation_ff8w7"),
+&"swing": SubResource("Animation_swcir")
+}
+
+[node name="Weapon" type="Node2D"]
+scale = Vector2(0.3, 0.3)
+script = ExtResource("1_swcir")
+
+[node name="hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionPolygon2D" parent="hitbox"]
+polygon = PackedVector2Array(-75, -181, 77, -186, 289, -143, 383, -63, 403, -2, 383, 48, 309, 126, 116, 182, 7, 184, 214, 110, 276, 0, 214, -93)
+disabled = true
+
+[node name="SlashEffect" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0)
+material = SubResource("CanvasItemMaterial_div1a")
+scale = Vector2(0.8, 0.8)
+texture = ExtResource("3_iymim")
+offset = Vector2(200, 0)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_8xwfw")
+}
+
+[node name="SoundOrigin" type="Marker2D" parent="."]
+position = Vector2(333, 0)
+
+[connection signal="body_entered" from="hitbox" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="hitbox" to="." method="_on_area_2d_body_exited"]

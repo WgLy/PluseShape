@@ -1,0 +1,19 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvyvn5g6siw2p"]
+
+[ext_resource type="Script" uid="uid://ea5ugytc4tcv" path="res://story_manager.gd" id="1_xxovs"]
+
+[node name="StoryManager" type="Node"]
+script = ExtResource("1_xxovs")
+
+[node name="CutsceneLayer" type="CanvasLayer" parent="."]
+
+[node name="OverlayScreen" type="ColorRect" parent="CutsceneLayer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0, 0, 0, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer2D" parent="CutsceneLayer"]

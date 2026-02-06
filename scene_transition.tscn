@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://cciqp6a54tk0a"]
+
+[ext_resource type="Script" uid="uid://dwic7k6k11ndd" path="res://scene_transition.gd" id="1_jiq3i"]
+
+[node name="SceneTransition" type="CanvasLayer"]
+script = ExtResource("1_jiq3i")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+mouse_filter = 2
+color = Color(0, 0, 0, 0)

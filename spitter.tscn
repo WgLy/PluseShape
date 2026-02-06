@@ -1,0 +1,39 @@
+[gd_scene load_steps=6 format=3 uid="uid://mq2yub6pojya"]
+
+[ext_resource type="Script" uid="uid://dug3k4gkdfskv" path="res://spitter.gd" id="1_rndba"]
+[ext_resource type="PackedScene" uid="uid://cphldf8rrrixw" path="res://BOSS_chapter1/boss_bullet.tscn" id="2_704re"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_dj10j"]
+radius = 33.333332
+
+[sub_resource type="Gradient" id="Gradient_704re"]
+offsets = PackedFloat32Array(0, 0.67333335, 0.7266667)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_dj10j"]
+gradient = SubResource("Gradient_704re")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="Spitter" type="CharacterBody2D" groups=["enemies"]]
+scale = Vector2(0.3, 0.3)
+collision_layer = 8
+collision_mask = 3
+script = ExtResource("1_rndba")
+bullet_scene = ExtResource("2_704re")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_dj10j")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_dj10j")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+target_desired_distance = 50.0
+
+[node name="Muzzle" type="Marker2D" parent="."]
+
+[node name="ShootTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="LineOfSightRay" type="RayCast2D" parent="."]

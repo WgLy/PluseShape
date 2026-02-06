@@ -1,0 +1,27 @@
+[gd_scene load_steps=5 format=3 uid="uid://cphldf8rrrixw"]
+
+[ext_resource type="Script" uid="uid://w2d0tp362dc7" path="res://BOSS_chapter1/boss_bullet.gd" id="1_ybu4u"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_58srx"]
+radius = 29.0
+
+[sub_resource type="Gradient" id="Gradient_fu2kp"]
+offsets = PackedFloat32Array(0, 0.62666667, 0.6933333, 1)
+colors = PackedColorArray(1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_2u4rr"]
+gradient = SubResource("Gradient_fu2kp")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="BossBullet" type="Area2D"]
+scale = Vector2(0.1, 0.1)
+collision_layer = 0
+collision_mask = 3
+script = ExtResource("1_ybu4u")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_58srx")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_2u4rr")

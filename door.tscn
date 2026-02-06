@@ -1,0 +1,69 @@
+[gd_scene load_steps=9 format=3 uid="uid://bevni3yob0uuh"]
+
+[ext_resource type="Script" uid="uid://dxdldghmtyckj" path="res://door.gd" id="1_ba8gm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_v6xrn"]
+radius = 38.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hun61"]
+size = Vector2(32, 7)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_hun61"]
+polygon = PackedVector2Array(0, -3, 32, -3, 32, 3, 0, 3)
+
+[sub_resource type="Gradient" id="Gradient_hun61"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ba8gm"]
+gradient = SubResource("Gradient_hun61")
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_ba8gm"]
+polygon = PackedVector2Array(-32, -3, 0, -3, 0, 3, -32, 3)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ba8gm"]
+size = Vector2(32, 7)
+
+[node name="door" type="Node2D" node_paths=PackedStringArray("left", "right")]
+script = ExtResource("1_ba8gm")
+left = NodePath("left")
+right = NodePath("right")
+
+[node name="detectArea" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="detectArea"]
+shape = SubResource("CircleShape2D_v6xrn")
+
+[node name="right" type="CharacterBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="right"]
+position = Vector2(16, 0)
+shape = SubResource("RectangleShape2D_hun61")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="right"]
+scale = Vector2(1, 0.9)
+occluder = SubResource("OccluderPolygon2D_hun61")
+
+[node name="Sprite2D" type="Sprite2D" parent="right"]
+scale = Vector2(0.5, 0.1)
+texture = SubResource("GradientTexture2D_ba8gm")
+offset = Vector2(32, 0)
+
+[node name="left" type="CharacterBody2D" parent="."]
+
+[node name="LightOccluder2D2" type="LightOccluder2D" parent="left"]
+scale = Vector2(1, 0.9)
+occluder = SubResource("OccluderPolygon2D_ba8gm")
+
+[node name="Sprite2D2" type="Sprite2D" parent="left"]
+scale = Vector2(0.5, 0.1)
+texture = SubResource("GradientTexture2D_ba8gm")
+offset = Vector2(-32, 0)
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="left"]
+position = Vector2(-16, 0)
+shape = SubResource("RectangleShape2D_ba8gm")
+
+[connection signal="body_entered" from="detectArea" to="." method="_on_detect_area_body_entered"]
+[connection signal="body_exited" from="detectArea" to="." method="_on_detect_area_body_exited"]

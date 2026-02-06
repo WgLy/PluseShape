@@ -1,0 +1,87 @@
+[gd_scene load_steps=14 format=3 uid="uid://cyxgxqt4tl7di"]
+
+[ext_resource type="Script" uid="uid://cl66r3nyxmqoo" path="res://destructiable_object.gd" id="1_6xpwh"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_6xpwh"]
+radius = 27.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_07nqa"]
+size = Vector2(64, 64)
+
+[sub_resource type="Gradient" id="Gradient_6xpwh"]
+offsets = PackedFloat32Array(0, 0.5933333, 0.62, 0.87333333, 1)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 0.73333335, 0.73333335, 0.73333335, 0, 0.24313726, 0.24313726, 0.24313726, 0, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_07nqa"]
+gradient = SubResource("Gradient_6xpwh")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_sf0y8"]
+polygon = PackedVector2Array(0, -26, 10, -24, 19, -18, 24, -10, 26, 0, 25, 9, 20, 17, 11, 24, 0, 26, -10, 24, -19, 18, -24, 10, -26, 0, -24, -10, -18, -19, -10, -24)
+
+[sub_resource type="Gradient" id="Gradient_07nqa"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sf0y8"]
+gradient = SubResource("Gradient_07nqa")
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_82vte"]
+polygon = PackedVector2Array(-29, -29, 29, -29, 29, 29, -29, 29)
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_6xpwh"]
+light_mode = 2
+
+[sub_resource type="Gradient" id="Gradient_fr06r"]
+offsets = PackedFloat32Array(0, 0.62666667, 0.68666667, 0.74666667, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.16470589, 0.90588236, 0.16470589, 0, 0.18039216, 1, 0.18039216, 1, 0.20705882, 0.20705882, 0.20705882, 0, 0.43137255, 0.43137255, 0.43137255, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_82vte"]
+gradient = SubResource("Gradient_fr06r")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_07nqa"]
+radius = 1113.0005
+
+[node name="destructiableObject" type="CharacterBody2D" groups=["DestructiableObjects"]]
+collision_layer = 8
+collision_mask = 8
+script = ExtResource("1_6xpwh")
+shape_round = SubResource("CircleShape2D_6xpwh")
+shape_rect = SubResource("RectangleShape2D_07nqa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="RoundArt" type="Node2D" parent="Visuals"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals/RoundArt"]
+texture = SubResource("GradientTexture2D_07nqa")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Visuals/RoundArt"]
+occluder = SubResource("OccluderPolygon2D_sf0y8")
+
+[node name="RectArt" type="Node2D" parent="Visuals"]
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals/RectArt"]
+texture = SubResource("GradientTexture2D_sf0y8")
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="Visuals/RectArt"]
+occluder = SubResource("OccluderPolygon2D_82vte")
+
+[node name="Hint" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_6xpwh")
+scale = Vector2(1.6, 1.6)
+texture = SubResource("GradientTexture2D_82vte")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("CircleShape2D_07nqa")
+
+[connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]

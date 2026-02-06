@@ -1,0 +1,49 @@
+[gd_scene load_steps=8 format=3 uid="uid://c0proc2oyh0gw"]
+
+[ext_resource type="Script" uid="uid://c28dk4l2jeot3" path="res://sonar_hunter.gd" id="1_ed4ga"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_ed4ga"]
+radius = 30.149628
+
+[sub_resource type="Gradient" id="Gradient_2kkqx"]
+offsets = PackedFloat32Array(0, 0.6533333, 0.68666667)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0.4392157, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sjmcu"]
+gradient = SubResource("Gradient_2kkqx")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bu2p3"]
+radius = 92.72001
+
+[sub_resource type="Gradient" id="Gradient_nhafk"]
+offsets = PackedFloat32Array(0, 0.21333334, 0.38666666, 0.44666666, 0.67333335, 0.74)
+colors = PackedColorArray(0, 0, 0, 0, 0, 0, 0.14509805, 0.23921569, 0, 0, 0.20392157, 1, 0, 0, 0.25882354, 0.42352942, 1.2995303e-06, 0, 0.49183983, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wfup3"]
+gradient = SubResource("Gradient_nhafk")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="SonarHunter" type="CharacterBody2D" groups=["enemies"]]
+scale = Vector2(0.5, 0.5)
+script = ExtResource("1_ed4ga")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_ed4ga")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_sjmcu")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="ShockwaveArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ShockwaveArea"]
+shape = SubResource("CircleShape2D_bu2p3")
+
+[node name="ShockwaveVisual" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_wfup3")

@@ -1,0 +1,47 @@
+[gd_scene load_steps=8 format=3 uid="uid://djfjk77b46jgu"]
+
+[ext_resource type="Script" uid="uid://pckjdbaynxfm" path="res://fall_rock.gd" id="1_4dwc0"]
+[ext_resource type="PackedScene" uid="uid://db7uk1u0iddy" path="res://smoke_effect.tscn" id="2_1qwwd"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1qwwd"]
+radius = 31.257
+
+[sub_resource type="Gradient" id="Gradient_ol4ik"]
+offsets = PackedFloat32Array(0, 0.29333332, 0.64666665, 0.73333335, 1)
+colors = PackedColorArray(1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 1, 1, 0, 0, 0, 1, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tkabl"]
+gradient = SubResource("Gradient_ol4ik")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_2eof4"]
+offsets = PackedFloat32Array(0, 0.56, 0.6333333, 0.6533333, 0.7133333)
+colors = PackedColorArray(0.6392157, 0, 0, 0, 0.6392157, 0, 0, 0, 0.63888407, 2.0214916e-06, 4.813075e-07, 1, 0.63888407, 2.0214916e-06, 4.813075e-07, 1, 0.6392157, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_iao48"]
+gradient = SubResource("Gradient_2eof4")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[node name="fall_rock" type="Node2D" node_paths=PackedStringArray("image1", "image2")]
+visible = false
+script = ExtResource("1_4dwc0")
+image1 = NodePath("Sprite2D")
+image2 = NodePath("Sprite2D2")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("CircleShape2D_1qwwd")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_tkabl")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_iao48")
+
+[node name="smoke_effect" parent="." instance=ExtResource("2_1qwwd")]
+visible = false

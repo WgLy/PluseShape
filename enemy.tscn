@@ -1,0 +1,54 @@
+[gd_scene load_steps=8 format=3 uid="uid://rhhrc46fa2f0"]
+
+[ext_resource type="Script" uid="uid://camjueyg2f7yp" path="res://enemy.gd" id="1_7k104"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4gyqm"]
+
+[sub_resource type="Gradient" id="Gradient_7k104"]
+offsets = PackedFloat32Array(0, 0.66, 1)
+colors = PackedColorArray(0, 0, 0, 1, 1, 0, 0, 1, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4gyqm"]
+gradient = SubResource("Gradient_7k104")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qi2p4"]
+radius = 33.333332
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7k104"]
+radius = 1320.0377
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4gyqm"]
+radius = 46.666664
+
+[node name="Enemy" type="CharacterBody2D" groups=["enemies"]]
+scale = Vector2(0.15, 0.15)
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("1_7k104")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+material = SubResource("CanvasItemMaterial_4gyqm")
+texture = SubResource("GradientTexture2D_4gyqm")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_qi2p4")
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("CircleShape2D_7k104")
+
+[node name="Hitbox" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox"]
+shape = SubResource("CircleShape2D_4gyqm")
+
+[connection signal="body_entered" from="DetectArea" to="." method="_on_detect_area_body_entered"]
+[connection signal="body_exited" from="DetectArea" to="." method="_on_detect_area_body_exited"]
+[connection signal="body_entered" from="Hitbox" to="." method="_on_hitbox_body_entered"]

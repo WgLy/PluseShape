@@ -1,0 +1,59 @@
+[gd_scene load_steps=7 format=3 uid="uid://b32s0qlgabljq"]
+
+[ext_resource type="Script" uid="uid://cado8h7jckf7q" path="res://spider.gd" id="1_k3kcl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xfhvr"]
+radius = 31.016125
+
+[sub_resource type="Gradient" id="Gradient_k3kcl"]
+offsets = PackedFloat32Array(0, 0.6666667, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0, 0.8052002, 0.50642747, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qrebf"]
+gradient = SubResource("Gradient_k3kcl")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_1yt70"]
+radius = 662.003
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_k3kcl"]
+radius = 322.09937
+
+[node name="spider" type="CharacterBody2D"]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("1_k3kcl")
+
+[node name="Hitbox" type="CollisionShape2D" parent="." groups=["enemies"]]
+shape = SubResource("CircleShape2D_xfhvr")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_qrebf")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+navigation_layers = 2
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+shape = SubResource("CircleShape2D_1yt70")
+
+[node name="AttackArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackArea"]
+shape = SubResource("CircleShape2D_k3kcl")
+
+[node name="Line2D" type="Line2D" parent="."]
+width = 5.0
+
+[node name="MouthPosition" type="Marker2D" parent="."]
+
+[node name="StateTimer" type="Timer" parent="."]
+
+[node name="RayCast2D" type="RayCast2D" parent="."]
+collision_mask = 3

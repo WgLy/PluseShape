@@ -1,0 +1,115 @@
+[gd_scene load_steps=10 format=3 uid="uid://ysjxaqoe4eev"]
+
+[ext_resource type="Script" uid="uid://cxwveomc7a0xn" path="res://dialogue_layer.gd" id="1_sasex"]
+[ext_resource type="Shader" uid="uid://n2hdy3480e72" path="res://dialogue_layer.gdshader" id="2_872dw"]
+[ext_resource type="Theme" uid="uid://oykjxhwr5qx4" path="res://ui_theme.tres" id="2_cb3en"]
+[ext_resource type="Texture2D" uid="uid://djtubuafbuhif" path="res://icon.svg" id="2_vpqk3"]
+[ext_resource type="Shader" uid="uid://bo3ya10sd2bfu" path="res://dialogue_layer_picture.gdshader" id="3_5kmi4"]
+[ext_resource type="FontFile" uid="uid://pkg8wsl8xr10" path="res://Fonts/LXGW_WenKai_TC/LXGWWenKaiTC-Bold.ttf" id="6_awwnu"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5kmi4"]
+shader = ExtResource("2_872dw")
+shader_parameter/base_color = Color(0, 0.15, 0.3, 0.7)
+shader_parameter/scan_line_color = Color(1, 1, 1, 0.1)
+shader_parameter/fade_power = 2.5
+shader_parameter/line_count = 200.0
+shader_parameter/line_speed = 0.5
+shader_parameter/flicker_strength = 0.02
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_vpqk3"]
+bg_color = Color(0.11372549, 0.11372549, 0.11372549, 0)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vf0an"]
+shader = ExtResource("3_5kmi4")
+shader_parameter/tint_color = Color(1, 1, 1, 1)
+shader_parameter/saturation = 0.2
+shader_parameter/scan_line_color = Color(1, 1, 1, 0.1)
+shader_parameter/line_count = 200.0
+shader_parameter/line_speed = 0.5
+shader_parameter/line_sharpness = 10.0
+shader_parameter/flicker_strength = 0.02
+shader_parameter/edge_softness = 0.1
+
+[node name="DialogueLayer" type="CanvasLayer"]
+layer = 2
+script = ExtResource("1_sasex")
+
+[node name="DialogueBox" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -266.0
+offset_bottom = -1.0
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("2_cb3en")
+
+[node name="Panel" type="Panel" parent="DialogueBox"]
+material = SubResource("ShaderMaterial_5kmi4")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 48.0
+offset_top = -42.0
+offset_right = -48.0
+offset_bottom = -13.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_vpqk3")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="DialogueBox/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 159.0
+offset_top = 24.0
+offset_right = -159.0
+offset_bottom = -24.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FaceRect" type="TextureRect" parent="DialogueBox/Panel/HBoxContainer"]
+material = SubResource("ShaderMaterial_vf0an")
+layout_mode = 2
+size_flags_horizontal = 3
+texture = ExtResource("2_vpqk3")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DialogueBox/Panel/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_stretch_ratio = 3.0
+
+[node name="Label" type="Label" parent="DialogueBox/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 6
+theme_override_font_sizes/font_size = 30
+text = "<magic sound>"
+
+[node name="RichTextLabel" type="RichTextLabel" parent="DialogueBox/Panel/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 3.0
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.7490196)
+theme_override_constants/shadow_outline_size = 2
+theme_override_fonts/normal_font = ExtResource("6_awwnu")
+theme_override_font_sizes/normal_font_size = 30
+theme_override_font_sizes/bold_font_size = 30
+theme_override_font_sizes/bold_italics_font_size = 30
+theme_override_font_sizes/italics_font_size = 30
+theme_override_font_sizes/mono_font_size = 30
+bbcode_enabled = true
+text = "oiaioiiiai
+4545
+我曾難自拔於世界之大
+也沉溺於其中夢話"

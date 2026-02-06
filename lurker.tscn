@@ -1,0 +1,42 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxxpvuwogibso"]
+
+[ext_resource type="Script" uid="uid://cppcljhovsbo4" path="res://lurker.gd" id="1_bwlsa"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bwlsa"]
+radius = 28.284271
+
+[sub_resource type="Gradient" id="Gradient_ufxrd"]
+offsets = PackedFloat32Array(0, 0.62, 0.6533333)
+colors = PackedColorArray(0, 0, 0, 0, 0.38039216, 0.101960786, 0, 1, 0.38039216, 0.101960786, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_s63my"]
+gradient = SubResource("Gradient_ufxrd")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+
+[sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_bwlsa"]
+polygon = PackedVector2Array(0, -31, 12, -27, 21, -23, 27, -18, 29, -10, 32, -1, 30, 11, 19, 25, 2, 31, -15, 30, -32, 9, -34, -10, -26, -21, -15, -28)
+
+[node name="Lurker" type="CharacterBody2D" groups=["enemies"]]
+scale = Vector2(0.2, 0.2)
+collision_layer = 8
+collision_mask = 11
+script = ExtResource("1_bwlsa")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bwlsa")
+
+[node name="BodySprite" type="Sprite2D" parent="."]
+texture = SubResource("GradientTexture2D_s63my")
+
+[node name="ShieldSprite" type="Sprite2D" parent="."]
+scale = Vector2(0.11904763, 0.13129103)
+
+[node name="LightOccluder2D" type="LightOccluder2D" parent="."]
+occluder = SubResource("OccluderPolygon2D_bwlsa")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+navigation_layers = 2
+
+[node name="FleeTimer" type="Timer" parent="."]
+one_shot = true
