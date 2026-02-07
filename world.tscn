@@ -608,8 +608,15 @@ collision_mask = 2
 [node name="interactable_object" parent="objects" instance=ExtResource("17_udxuc")]
 position = Vector2(166.00005, -181.00003)
 scale = Vector2(0.733, 0.733)
+interaction_mode = 2
 dialogue_lines = Array[String](["su3lcsu3cl3", "dfsfsadfasdf", "asdfasdfasdf", "adsfsdf"])
 dialogue_npc_name = "可互動物件"
+document_content = "能石為近期所發現的全新礦物，目前探測後認為主要分布於X市與Y市交界處，其中X市郊區地下似乎蘊含著巨大的能石礦脈。
+
+除此之外，科學家們還發現了奇怪的現象：生活在礦脈正上方的生物似乎都產生了與其物種相異的特徵與習性，像是陸生動物突然大量潛入水下、草食性動物開始以肉為食等。
+
+這些現象不外乎都訴說著同一件事實：能石並非單純的礦物。
+"
 
 [node name="WaterDrip" parent="objects" instance=ExtResource("2_aqk2v")]
 position = Vector2(-104, -40)
