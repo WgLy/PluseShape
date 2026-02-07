@@ -223,6 +223,8 @@ func start_dash_sequence(target_pos: Vector2):
 	var dist = global_position.distance_to(final_pos)
 	var dash_time = min(dist / dash_speed, dash_duration)
 	
+	SoundManager.play_spatial_sfx("enemy_dash", global_position, 0.0, 0.1)
+	
 	# 4. 衝刺階段 (DASHING)
 	_tween.chain().tween_callback(func(): current_state = State.DASHING)
 	
@@ -245,6 +247,7 @@ func _perform_impact():
 	shockwave_visual.visible = true
 	shockwave_visual.scale = Vector2.ZERO
 	shockwave_visual.modulate.a = 1.0
+	SoundManager.play_spatial_sfx("enemy_shock", global_position, 0.0, 0.1)
 	
 	var impact_tween = create_tween()
 	impact_tween.set_parallel(true)

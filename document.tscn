@@ -1,0 +1,54 @@
+[gd_scene load_steps=3 format=3 uid="uid://e0qnprqqi6r2"]
+
+[ext_resource type="Script" uid="uid://dy1srhwvdiaed" path="res://document.gd" id="1_pfdnj"]
+[ext_resource type="Theme" uid="uid://oykjxhwr5qx4" path="res://ui_theme.tres" id="2_1tgo3"]
+
+[node name="Document" type="CanvasLayer" groups=["document_ui"]]
+process_mode = 3
+script = ExtResource("1_pfdnj")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("2_1tgo3")
+
+[node name="Panel" type="Panel" parent="Control"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 587.0
+offset_top = 56.0
+offset_right = -583.0
+offset_bottom = -74.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(375, 475)
+
+[node name="RichTextLabel" type="RichTextLabel" parent="Control/Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 64.0
+offset_top = 61.0
+offset_right = -64.0
+offset_bottom = -61.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/normal_font_size = 32
+theme_override_font_sizes/bold_font_size = 32
+theme_override_font_sizes/bold_italics_font_size = 32
+theme_override_font_sizes/italics_font_size = 32
+theme_override_font_sizes/mono_font_size = 32
+bbcode_enabled = true
+text = "這個遊戲做的比我預想中的還久
+希望他之後可以有好結果
+拜託老大趕快把劇情給我QwQ
+同時進行PluseShape和sone ti mi
+實在是太過刺激。
+oiaioiiiai"

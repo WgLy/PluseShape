@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://foxblt4e3sn7"
+path="res://.godot/imported/Modern8.ogg-28ffcfc1127b09866e986f2e81870dba.oggvorbisstr"
+
+[deps]
+
+source_file="res://Music/SoundResource/UI Soundpack/UI Soundpack/OGG/Modern8.ogg"
+dest_files=["res://.godot/imported/Modern8.ogg-28ffcfc1127b09866e986f2e81870dba.oggvorbisstr"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

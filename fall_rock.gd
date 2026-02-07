@@ -84,6 +84,7 @@ func _start_lifecycle(target: Node2D, size_scale: float, warn_time: float, fall_
 	# --- 階段 3: 撞擊 (Impact Phase) ---
 	_check_impact()
 	fire_sonar()
+	SoundManager.play_spatial_sfx("fall_rock_shock", global_position, 0.0, 0.1)
 	if add_des_object and des_obj_scene: # 多加一個檢查確保 scene 不是空的
 		var new_des_obj = des_obj_scene.instantiate()
 		get_parent().add_child(new_des_obj)

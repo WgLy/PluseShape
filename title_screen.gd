@@ -10,7 +10,9 @@ func _ready() -> void:
 # 1. 新遊戲
 func _on_button_new_game_pressed():
 	# 使用過場動畫進入第一關
+	SoundManager.play_spatial_sfx("ui_click", global_position, 0.0, 0.1)
 	SceneTransition.change_scene("res://world.tscn")
+	
 
 # 2. 繼續遊戲
 func _on_button_continue_pressed():

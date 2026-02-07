@@ -1,8 +1,9 @@
 extends CharacterBody2D
 
-@export var speed = 20.0 # 比玩家慢一點 (玩家是 300)
+@export var speed: float = 20.0 # 比玩家慢一點 (玩家是 300)
 var player = null # 追蹤目標
 var hp = 100
+
 
 func _physics_process(delta):
 	if player:
@@ -33,6 +34,7 @@ func _on_detect_area_body_exited(body):
 func take_damage(amount, source_position = Vector2.ZERO):
 	hp -= amount
 	print("怪物受傷！剩餘血量：", hp)
+	SoundManager.play_spatial_sfx("enemy_hurt", global_position, 0.0, 0.1)
 	
 	# 受傷視覺反饋：閃爍一下
 	var tween = create_tween()
@@ -47,10 +49,12 @@ func take_damage(amount, source_position = Vector2.ZERO):
 		velocity = knockback_dir * 800 # 擊退力道
 		move_and_slide() # 立即執行一次移動以免卡住
 	
+	
 	if hp <= 0:
 		die()
 
 func die():
+	SoundManager.play_spatial_sfx("enemy_die", global_position, 0.0, 0.1)
 	print("怪物死亡！")
 	queue_free() # 刪除自己
 	

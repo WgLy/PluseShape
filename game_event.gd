@@ -16,18 +16,8 @@ func create_noise(pos: Vector2, audio_stream: AudioStream, logic_range: float = 
 	if audio_stream:
 		# 假設你有一個 AudioManager，沒有的話這裡可以先暫時用臨時播放器
 		# AudioManager.play_sfx_at(pos, audio_stream) 
-		_play_temp_sound(pos, audio_stream) 
-	
+		# SoundManager.play_spatial_sfx("emeny_shock", pos, 0.0, 0.1)
+		pass
 	# 2. 處理邏輯訊號 (給怪物聽)
 	if logic_range > 0:
 		emit_signal("sound_emitted", pos, logic_range, type)
-
-# (臨時用) 簡單的播放器，之後請替換成你的 AudioManager
-func _play_temp_sound(pos: Vector2, stream: AudioStream):
-	var player = AudioStreamPlayer2D.new()
-	player.stream = stream
-	player.global_position = pos
-	player.bus = "SFX"
-	add_child(player)
-	player.finished.connect(player.queue_free)
-	player.play()

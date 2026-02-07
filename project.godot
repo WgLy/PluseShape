@@ -25,6 +25,9 @@ SaveLoadWindow="*res://save_load_window.tscn"
 StoryManager="*res://story_manager.tscn"
 Title="*res://title.tscn"
 GameEvent="*res://game_event.gd"
+SoundManager="*res://Music/SoundManager.gd"
+AudioLibrary="*res://Music/AudioLibrary.gd"
+Document="*res://document.tscn"
 
 [display]
 

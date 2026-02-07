@@ -132,6 +132,7 @@ func _perform_slash():
 	# 【修改 3】衝刺方向計算
 	# 因為我們使用了 rotation，所以怪物的「正前方」永遠是 Vector2.RIGHT 旋轉後的結果
 	var dash_vector = Vector2.RIGHT.rotated(rotation)
+	SoundManager.play_spatial_sfx("enemy_dash", global_position, 0.0, 0.1)
 	
 	# 往前踏步
 	var t = create_tween()
@@ -163,7 +164,7 @@ func take_damage(amount, source_pos, _knockback = 0):
 	if current_state == State.DEAD: return
 	
 	hp -= amount
-	
+	SoundManager.play_spatial_sfx("enemy_hurt", global_position, 0.0, 0.1)
 	if current_state == State.PREPARE_ATTACK:
 		# 打斷攻擊
 		attack_area.monitoring = false
@@ -185,7 +186,7 @@ func take_damage(amount, source_pos, _knockback = 0):
 func die():
 	current_state = State.DEAD
 	attack_area.monitoring = false
-	
+	SoundManager.play_spatial_sfx("enemy_die", global_position, 0.0, 0.1)
 	var t = create_tween()
 	t.set_parallel(true)
 	# 死亡時隨機旋轉，或是保持倒下的樣子

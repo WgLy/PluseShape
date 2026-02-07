@@ -164,15 +164,24 @@ func _start_repositioning():
 # ==========================================================
 
 func _on_shoot_timer_timeout():
+	# 基本檢查：如果不是追擊狀態或玩家消失，稍後再測
 	if current_state != State.CHASE or not is_instance_valid(target_player):
 		shoot_timer.start(1.0)
 		return
-		
-	# 1. 隨機選擇攻擊模式
+	
+	# 1. 計算距離
+	var dist = global_position.distance_to(target_player.global_position)
+	
+	# 【關鍵優化】如果距離大於最大偵測範圍，直接跳出，不產生子彈！
+	if dist > max_detect_range:
+		# 設定一個較短的檢查間隔 (例如 0.5 ~ 1.0 秒)，持續監測玩家是否靠近
+		shoot_timer.start(1.0) 
+		return
+
+	# 2. 距離夠近，執行隨機攻擊
 	_fire_random_pattern()
 	
-	# 2. 計算下次射擊時間
-	var dist = global_position.distance_to(target_player.global_position)
+	# 3. 計算下次射擊時間 (根據距離動態調整攻速)
 	var next_wait_time = _calculate_cooldown(dist)
 	shoot_timer.start(next_wait_time)
 

@@ -26,6 +26,7 @@ func _on_detect_area_body_exited(body: Node2D) -> void:
 
 # --- 開門邏輯 ---
 func open_door():
+	SoundManager.play_spatial_sfx("door_toggle", global_position, 0.0, 0.1)
 	# 1. 如果有正在執行的動畫，先殺掉它，避免動作打架
 	if current_tween:
 		current_tween.kill()
@@ -50,6 +51,7 @@ func open_door():
 
 # --- 關門邏輯 ---
 func close_door():
+	SoundManager.play_spatial_sfx("door_toggle", global_position, 0.0, 0.1)
 	if current_tween:
 		current_tween.kill()
 	

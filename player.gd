@@ -126,6 +126,7 @@ func fire_sonar():
 	# 假設你有 sonar_sound.wav，如果沒有先填 null
 	# logic_range 設為 600，這就是你聲納能引怪的距離
 	GameEvent.create_noise(global_position, null, 600.0, "sonar")
+	SoundManager.play_spatial_sfx("sonar_pluse", global_position, 0.0, 0.1)
 
 # --- 輸入處理 (整合攻擊與衝刺) ---
 func handle_throw_input(delta):
@@ -230,6 +231,7 @@ func start_dash_recall():
 		var distance = start_pos.distance_to(target_pos)
 		var duration = distance / dashing_speed
 		if duration < 0.1: duration = 0.1
+		SoundManager.play_spatial_sfx("player_dash", global_position, 0.0, 0.1)
 		
 		look_at(target_pos)
 		

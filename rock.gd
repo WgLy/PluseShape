@@ -65,7 +65,7 @@ func _physics_process(delta):
 					fly_direction = fly_direction.bounce(normal)
 					fly_speed *= bounce_factor
 					# 聽聲辨位系統
-					GameEvent.create_noise(global_position, null, 400.0, "impact")
+					GameEvent.create_noise(global_position, null, 300.0, "impact")
 			
 			fly_speed = lerp(fly_speed, 0.0, delta * friction)
 			

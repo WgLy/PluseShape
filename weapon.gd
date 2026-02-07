@@ -31,6 +31,8 @@ func attack():
 	spawn_weak_pulse()
 	player.current_hp -= 1
 	player.emit_signal("hp_changed", player.current_hp)
+	
+	SoundManager.play_spatial_sfx("player_attack", global_position, 0.0, 0.1)
 
 func spawn_weak_pulse():
 	var pulse = sonar_scene.instantiate()

@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bk1sgujwf0wk3" path="res://speech_bubble.tscn" id="1_bcilo"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_4n3oy"]
-radius = 20.024984
+radius = 23.0
 
 [sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_4n3oy"]
 light_mode = 2
@@ -32,6 +32,7 @@ polygon = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 
 [node name="interactable_object" type="Node2D" node_paths=PackedStringArray("hint")]
 script = ExtResource("1_4n3oy")
+dialogue_lines = Array[String]([""])
 hint = NodePath("Hint")
 
 [node name="DetectArea" type="Area2D" parent="."]

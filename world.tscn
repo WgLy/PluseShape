@@ -476,7 +476,7 @@ terrain_set_0/terrain_0/color = Color(0.5, 0.34375, 0.25, 1)
 sources/0 = SubResource("TileSetAtlasSource_pkg7o")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gbfbk"]
-bg_color = Color(0, 1, 1, 0.3647059)
+bg_color = Color(1, 1, 1, 0.3647059)
 corner_radius_top_left = 5
 corner_radius_top_right = 5
 corner_radius_bottom_right = 5
@@ -608,6 +608,8 @@ collision_mask = 2
 [node name="interactable_object" parent="objects" instance=ExtResource("17_udxuc")]
 position = Vector2(166.00005, -181.00003)
 scale = Vector2(0.733, 0.733)
+dialogue_lines = Array[String](["su3lcsu3cl3", "dfsfsadfasdf", "asdfasdfasdf", "adsfsdf"])
+dialogue_npc_name = "可互動物件"
 
 [node name="WaterDrip" parent="objects" instance=ExtResource("2_aqk2v")]
 position = Vector2(-104, -40)
