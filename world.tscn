@@ -508,7 +508,6 @@ tile_map_data = PackedByteArray("AAD0//n/AAABAAQAAAD0//r/AAABAAQAAAD0//v/AAABAAQ
 tile_set = SubResource("TileSet_gbfbk")
 
 [node name="Player" parent="." instance=ExtResource("2_tlwt5")]
-position = Vector2(103, 5)
 scale = Vector2(0.3, 0.3)
 
 [node name="Camera2D" type="Camera2D" parent="Player"]
@@ -591,7 +590,6 @@ position = Vector2(1031, -124)
 [node name="objects" type="Node" parent="."]
 
 [node name="SavePoint" parent="objects" instance=ExtResource("7_pkg7o")]
-position = Vector2(-130, -151)
 
 [node name="destructiableObject" parent="objects" instance=ExtResource("11_ic0uy")]
 position = Vector2(-144, 89)
@@ -601,7 +599,6 @@ type = "healthbull"
 [node name="destructiableObject2" parent="objects" instance=ExtResource("11_ic0uy")]
 position = Vector2(-121, 89)
 scale = Vector2(0.3, 0.3)
-shape_type = "rectangle"
 
 [node name="des_obj" parent="objects" instance=ExtResource("11_ic0uy")]
 visible = false
@@ -610,7 +607,6 @@ scale = Vector2(0.5, 0.5)
 type = "fall_rock"
 
 [node name="HealingArea" parent="objects" instance=ExtResource("12_k3n1d")]
-position = Vector2(-129, -151)
 collision_layer = 0
 collision_mask = 2
 
@@ -620,6 +616,8 @@ scale = Vector2(0.733, 0.733)
 interaction_mode = 2
 dialogue_lines = Array[String](["su3lcsu3cl3", "dfsfsadfasdf", "asdfasdfasdf", "adsfsdf"])
 dialogue_npc_name = "可互動物件"
+bubble_text = "這裡好像有什麼..."
+bubble_duration = 2.0
 document_content = "檔案：0025
 
 能石為近期所發現的全新礦物，目前探測後認為主要分布於X市與Y市交界處，其中X市郊區地下似乎蘊含著巨大的能石礦脈。
@@ -628,6 +626,8 @@ document_content = "檔案：0025
 
 這些現象不外乎都訴說著同一件事實：能石並非單純的礦物。
 "
+hint_duration = 0.5
+hint_scale = 0.5
 
 [node name="WaterDrip" parent="objects" instance=ExtResource("2_aqk2v")]
 position = Vector2(-104, -40)
@@ -642,9 +642,32 @@ position = Vector2(161, -80)
 scale = Vector2(0.3, 0.3)
 des_obj_scene = ExtResource("11_ic0uy")
 
+[node name="room1_comp1" parent="objects" instance=ExtResource("17_udxuc")]
+position = Vector2(-88, -128)
+interaction_mode = 0
+dialogue_lines = Array[String](["搜尋......", "獲得：[color=#00FFFF]能源零件[/color]"])
+dialogue_npc_name = "板條箱"
+bubble_text = "這裡好像有什麼..."
+bubble_duration = 2.0
+document_content = "這是一份神秘的文件內容..."
+hint_duration = 0.5
+hint_scale = 1.0
+
+[node name="room1_comp2" parent="objects" instance=ExtResource("17_udxuc")]
+position = Vector2(-33, -167)
+interaction_mode = 0
+dialogue_lines = Array[String](["搜尋......", "獲得：[color=#00FFFF]機械零件[/color]"])
+dialogue_npc_name = "雜物堆"
+bubble_text = "這裡好像有什麼..."
+bubble_duration = 2.0
+document_content = "這是一份神秘的文件內容..."
+hint_duration = 0.5
+hint_scale = 0.5
+
 [node name="NPCs" type="Node" parent="."]
 
 [node name="NPCtemplate" parent="NPCs" instance=ExtResource("7_gbfbk")]
+visible = false
 position = Vector2(-150, -63)
 
 [node name="women" parent="NPCs" groups=["story_woman"] instance=ExtResource("7_gbfbk")]
@@ -675,11 +698,11 @@ target_door = NodePath("../door_button")
 position = Vector2(136.00002, -104.000015)
 scale = Vector2(0.733, 0.733)
 
-[node name="pressurePlate" parent="doors" node_paths=PackedStringArray("door") instance=ExtResource("16_2u3nc")]
+[node name="pressurePlate" parent="doors" instance=ExtResource("16_2u3nc")]
+visible = false
 z_index = -1
 position = Vector2(161, -80)
 scale = Vector2(0.3, 0.3)
-door = NodePath("../door_plate")
 
 [node name="door" parent="doors" instance=ExtResource("2_wse8f")]
 position = Vector2(-136, 104)

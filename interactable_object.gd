@@ -21,17 +21,22 @@ enum InteractionMode { DIALOGUE, BUBBLE, DOCUMENT }
 @export_group("Visuals")
 @export var hint: Sprite2D # 提示圖示 (例如 ?)
 @export var hint_duration: float = 0.5
+@export var hint_scale: float = 0.5
 
 # --- 內部變數 ---
 var can_be_hint: bool = true
 var _tween: Tween
 var player_in_area: bool = false # 追蹤玩家是否在範圍內
 
+var is_finished: bool = false
 # 假設 SpeechBubble 是這個物件的子節點
 @onready var speech_bubble = $SpeechBubble 
 
 func _ready() -> void:
 	# 初始化 Hint 狀態
+	if not hint:
+		if has_node("Hint"): # 假設你的提示圖示節點叫這個名字
+			hint = $Hint
 	if hint:
 		hint.scale = Vector2.ZERO
 		hint.modulate.a = 1
@@ -48,6 +53,7 @@ func _input(event: InputEvent) -> void:
 			InteractionMode.DOCUMENT:
 				trigger_document()
 			# BUBBLE 模式不需要按鍵，它是進入範圍自動觸發的
+		is_finished = true
 
 # ==========================================================
 #       各模式邏輯
@@ -109,6 +115,7 @@ func _on_detect_area_body_exited(body: Node2D) -> void:
 # ==========================================================
 
 func show_hint():
+	print("show_hint ")
 	# initialize
 	if hint:
 		hint.scale = Vector2.ZERO
@@ -121,7 +128,7 @@ func show_hint():
 	_tween.set_parallel(true) 
 	
 	# --- 階段 1: 彈出 ---
-	_tween.tween_property(hint, "scale", Vector2(0.5, 0.5), hint_duration)\
+	_tween.tween_property(hint, "scale", Vector2(hint_scale, hint_scale), hint_duration)\
 		.set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	
 	# --- 階段 2: 停留 ---

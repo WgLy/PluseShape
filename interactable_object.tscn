@@ -32,8 +32,15 @@ polygon = PackedVector2Array(-7, -7, 7, -7, 7, 7, -7, 7)
 
 [node name="interactable_object" type="Node2D" node_paths=PackedStringArray("hint")]
 script = ExtResource("1_4n3oy")
+interaction_mode = null
 dialogue_lines = Array[String]([""])
+dialogue_npc_name = null
+bubble_text = null
+bubble_duration = null
+document_content = null
 hint = NodePath("Hint")
+hint_duration = null
+hint_scale = null
 
 [node name="DetectArea" type="Area2D" parent="."]
 collision_layer = 0

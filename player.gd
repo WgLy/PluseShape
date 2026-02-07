@@ -58,9 +58,25 @@ func _ready():
 	DialogueManager.dialogue_finished.connect(_on_dialogue_finished)
 	# StoryManager.play_new_game_sequence() # start story 
 	# fall_rock.spawn_fall_rock(self, 1.0, 2.0, 1.0, 10)
-	
+	# StoryManager.play_story_stage(1)
 	StoryManager.update_checkpoint(global_position)
+	# trigger_dialogue_with_options()
 	
+	
+# 測試用
+func trigger_dialogue_with_options():
+	# 1. 顯示選項並等待結果
+	# 這裡 await 會暫停，直到玩家選完
+	var choice_index = await DialogueManager.show_options("你看見了一個開關，要做什麼？", ["按下開關", "無視它", "踢它一腳"])
+	
+	# 2. 根據結果執行不同邏輯
+	match choice_index:
+		0: # 按下開關
+			DialogueManager.start_dialogue(["你按下了開關...", "燈亮了！"], "player")
+		1: # 無視它
+			DialogueManager.start_dialogue(["你決定不理會它。", "什麼事也沒發生。"], "player")
+		2: # 踢它一腳
+			DialogueManager.start_dialogue(["你用力踢了一腳！", "好痛！腳趾頭腫起來了！"], "player")
 
 func _physics_process(delta: float) -> void:
 	# 0. 更新那該死的為什麼我要寫分開的weapon
