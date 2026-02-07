@@ -1,4 +1,4 @@
-[gd_scene load_steps=34 format=4 uid="uid://cat1qxpuywk8l"]
+[gd_scene load_steps=35 format=4 uid="uid://cat1qxpuywk8l"]
 
 [ext_resource type="PackedScene" uid="uid://rhhrc46fa2f0" path="res://enemy.tscn" id="1_aqk2v"]
 [ext_resource type="Script" uid="uid://bav8yhmwddhi5" path="res://world.gd" id="1_dwbse"]
@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://h2jnhi46pges" path="res://player.tscn" id="2_tlwt5"]
 [ext_resource type="PackedScene" uid="uid://bevni3yob0uuh" path="res://door.tscn" id="2_wse8f"]
 [ext_resource type="PackedScene" uid="uid://yskocq1beqfd" path="res://weapon.tscn" id="4_036b0"]
+[ext_resource type="PackedScene" uid="uid://bhx30g576cjfc" path="res://notificationBox.tscn" id="5_mc2jv"]
 [ext_resource type="PackedScene" uid="uid://ddrf7tn7wllpa" path="res://BOSS_chapter1/boss_chapter_1.tscn" id="7_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://bwai4cfsk2l1m" path="res://NPCtemplate.tscn" id="7_gbfbk"]
 [ext_resource type="PackedScene" uid="uid://vx05y7j5h70h" path="res://save_point.tscn" id="7_pkg7o"]
@@ -551,6 +552,14 @@ show_percentage = false
 [node name="Natural_recover_timer" type="Timer" parent="CanvasLayer"]
 autostart = true
 
+[node name="NotificationRoot" parent="CanvasLayer" instance=ExtResource("5_mc2jv")]
+anchors_preset = 4
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -30.0
+offset_bottom = 30.0
+grow_vertical = 2
+
 [node name="enemies" type="Node" parent="."]
 
 [node name="Enemy" parent="enemies" groups=["persist"] instance=ExtResource("1_aqk2v")]
@@ -611,7 +620,9 @@ scale = Vector2(0.733, 0.733)
 interaction_mode = 2
 dialogue_lines = Array[String](["su3lcsu3cl3", "dfsfsadfasdf", "asdfasdfasdf", "adsfsdf"])
 dialogue_npc_name = "可互動物件"
-document_content = "能石為近期所發現的全新礦物，目前探測後認為主要分布於X市與Y市交界處，其中X市郊區地下似乎蘊含著巨大的能石礦脈。
+document_content = "檔案：0025
+
+能石為近期所發現的全新礦物，目前探測後認為主要分布於X市與Y市交界處，其中X市郊區地下似乎蘊含著巨大的能石礦脈。
 
 除此之外，科學家們還發現了奇怪的現象：生活在礦脈正上方的生物似乎都產生了與其物種相異的特徵與習性，像是陸生動物突然大量潛入水下、草食性動物開始以肉為食等。
 
