@@ -29,7 +29,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_Q:
 			# 呼叫顯示函式，並指定停留 1.0 秒
-			show_notification("系統測試：\nQ鍵輸入訊號正常", 1.0)
+			show_notification("提示訊息", 1.0)
 
 func _reset_visuals():
 	# Mask 寬度為 0 (隱藏文字)
@@ -50,7 +50,7 @@ func _reset_visuals():
 # 如果呼叫時沒給第二個參數，它會預設為 -1，代表使用原本的 stay_time
 func show_notification(text: String, custom_stay_time: float = -1.0):
 	# 1. 設定文字
-	message_label.text = "[center][valign]" + text + "[/valign][/center]"
+	message_label.text = text
 	
 	# 2. 重置狀態並殺死舊動畫
 	if _tween: _tween.kill()

@@ -232,6 +232,8 @@ func take_damage(amount, source_position = Vector2.ZERO):
 	tween.tween_property($Sprite2D, "modulate", Color(10, 10, 10, 1), 0.05) # 變超亮
 	tween.tween_property($Sprite2D, "modulate", Color.WHITE, 0.2) # 變回原色
 	
+	SoundManager.play_spatial_sfx("spider_damage", global_position, 0.0, 0.1)
+	
 	# hit_stop(0.1)
 	# 【新增】擊退效果 (Knockback)
 	# 如果傳入的來源位置不是零向量，就計算擊退
@@ -247,6 +249,7 @@ func die():
 	print("蜘蛛死亡")
 	if target_player and target_player.has_method("set_bound"):
 		target_player.set_bound(false) # 死前確保玩家解鎖
+	SoundManager.play_spatial_sfx("spider_death", global_position, 0.0, 0.1)
 	
 	# 播放死亡動畫或粒子特效
 	queue_free()

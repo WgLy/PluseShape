@@ -185,6 +185,7 @@ func handle_throw_input(delta):
 
 # --- 石頭生成與投擲 ---
 func spawn_rock_in_hand():
+	SoundManager.play_spatial_sfx("stone_lift", global_position, 0.0, 0.1)
 	current_held_rock = rock_scene.instantiate()
 	add_child(current_held_rock)
 	if scale.x != 0:
@@ -312,6 +313,12 @@ func take_damage(amount, source_position, level: int = 100):
 	var knockback_dir = (global_position - source_position).normalized()
 	velocity = knockback_dir * level
 	move_and_slide()
+	
+	# 搜尋群組 "damage_vignette" (直接找到那個 TextureRect)
+	var damage_fx = get_tree().get_first_node_in_group("damage_vignette")
+	# 呼叫特效
+	if damage_fx and damage_fx.has_method("play_damage_effect"):
+		damage_fx.play_damage_effect()
 
 func hp_change(val: int, type: String = "normal"):
 	if current_hp < max_hp and type == "recover":

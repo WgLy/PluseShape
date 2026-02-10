@@ -1,8 +1,16 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwai4cfsk2l1m"]
+[gd_scene load_steps=7 format=3 uid="uid://bwai4cfsk2l1m"]
 
 [ext_resource type="Script" uid="uid://dx55k7aprgsv3" path="res://npc_template.gd" id="1_yok17"]
-[ext_resource type="Texture2D" uid="uid://djtubuafbuhif" path="res://icon.svg" id="2_ffdvq"]
 [ext_resource type="PackedScene" uid="uid://bk1sgujwf0wk3" path="res://speech_bubble.tscn" id="3_ffdvq"]
+
+[sub_resource type="Gradient" id="Gradient_yok17"]
+offsets = PackedFloat32Array(0, 0.64666665, 0.68666667)
+colors = PackedColorArray(0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ffdvq"]
+gradient = SubResource("Gradient_yok17")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rl1cu"]
 radius = 20.0
@@ -14,8 +22,8 @@ radius = 6.0
 script = ExtResource("1_yok17")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.109375, 0.109375)
-texture = ExtResource("2_ffdvq")
+scale = Vector2(0.2, 0.2)
+texture = SubResource("GradientTexture2D_ffdvq")
 
 [node name="Detect" type="Area2D" parent="."]
 collision_layer = 0

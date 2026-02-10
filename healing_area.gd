@@ -29,6 +29,10 @@ func _on_body_exited(body: Node2D) -> void:
 func _on_timer_timeout() -> void:
 	player.hp_change(1, "recover")
 	player.hp_change(1, "normal")
+	var vignette = get_tree().get_first_node_in_group("damage_vignette")
+	
+	# if vignette and vignette.has_method("play_heal_effect"):
+	#	vignette.play_heal_effect()
 
 func is_player_in_zone() -> bool:
 	# 1. 取得目前範圍內「所有」的物體

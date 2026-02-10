@@ -1,4 +1,4 @@
-[gd_scene load_steps=35 format=4 uid="uid://cat1qxpuywk8l"]
+[gd_scene load_steps=39 format=4 uid="uid://cat1qxpuywk8l"]
 
 [ext_resource type="PackedScene" uid="uid://rhhrc46fa2f0" path="res://enemy.tscn" id="1_aqk2v"]
 [ext_resource type="Script" uid="uid://bav8yhmwddhi5" path="res://world.gd" id="1_dwbse"]
@@ -8,6 +8,7 @@
 [ext_resource type="PackedScene" uid="uid://bevni3yob0uuh" path="res://door.tscn" id="2_wse8f"]
 [ext_resource type="PackedScene" uid="uid://yskocq1beqfd" path="res://weapon.tscn" id="4_036b0"]
 [ext_resource type="PackedScene" uid="uid://bhx30g576cjfc" path="res://notificationBox.tscn" id="5_mc2jv"]
+[ext_resource type="Script" uid="uid://guygy18rg23f" path="res://damage_rect.gd" id="6_bo7i5"]
 [ext_resource type="PackedScene" uid="uid://ddrf7tn7wllpa" path="res://BOSS_chapter1/boss_chapter_1.tscn" id="7_cbp6q"]
 [ext_resource type="PackedScene" uid="uid://bwai4cfsk2l1m" path="res://NPCtemplate.tscn" id="7_gbfbk"]
 [ext_resource type="PackedScene" uid="uid://vx05y7j5h70h" path="res://save_point.tscn" id="7_pkg7o"]
@@ -490,6 +491,18 @@ corner_radius_top_right = 5
 corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mc2jv"]
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_bo7i5"]
+offsets = PackedFloat32Array(0, 0.9266667, 1)
+colors = PackedColorArray(0, 0, 0, 0, 0.38039216, 0, 0, 0, 1, 1, 1, 0.2509804)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_4h6ng"]
+gradient = SubResource("Gradient_bo7i5")
+fill = 2
+fill_from = Vector2(0.5, 0.5)
+
 [sub_resource type="OccluderPolygon2D" id="OccluderPolygon2D_cbp6q"]
 polygon = PackedVector2Array(454, -175, 458, 80, 463, -61)
 
@@ -558,6 +571,17 @@ anchor_bottom = 0.5
 offset_top = -30.0
 offset_bottom = 30.0
 grow_vertical = 2
+
+[node name="DamageRect" type="TextureRect" parent="CanvasLayer" groups=["damage_vignette"]]
+material = SubResource("CanvasItemMaterial_mc2jv")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_4h6ng")
+script = ExtResource("6_bo7i5")
 
 [node name="enemies" type="Node" parent="."]
 

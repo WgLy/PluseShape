@@ -66,6 +66,7 @@ func _physics_process(delta):
 					fly_speed *= bounce_factor
 					# 聽聲辨位系統
 					GameEvent.create_noise(global_position, null, 300.0, "impact")
+					SoundManager.play_spatial_sfx("stone_impact", global_position, 0.0, 0.1)
 			
 			fly_speed = lerp(fly_speed, 0.0, delta * friction)
 			

@@ -154,6 +154,7 @@ func _scan_for_rocks():
 	
 	if best_rock:
 		print("【AI】發現好石頭！前往撿拾")
+		SoundManager.play_spatial_sfx("mouse_eat", global_position, 0.0, 0.1)
 		target_rock = best_rock
 		current_state = State.MOVING_TO_ROCK
 
@@ -212,6 +213,8 @@ func take_damage(amount, source_pos, _knockback = 0):
 	
 	hp -= amount
 	
+	SoundManager.play_spatial_sfx("mouse_hurt", global_position, 0.0, 0.1)
+	
 	var t = create_tween()
 	t.tween_property(sprite, "modulate", Color(10, 10, 10), 0.05)
 	t.tween_property(sprite, "modulate", Color.WHITE, 0.1)
@@ -233,6 +236,8 @@ func die():
 	current_state = State.DEAD
 	if _tween: _tween.kill()
 	digging_particles.emitting = false
+	
+	SoundManager.play_spatial_sfx("mouse_die", global_position, 0.0, 0.1)
 	
 	var t = create_tween()
 	t.set_parallel(true)

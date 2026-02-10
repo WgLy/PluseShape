@@ -5,7 +5,7 @@ var sonar_scene = preload("res://sonar_pulse.tscn")
 @onready var background = $TextureRect
 
 func _ready() -> void:
-	pass
+	SoundManager.play_music("background_music", 0.0, 1.0)
 
 # 1. 新遊戲
 func _on_button_new_game_pressed():
