@@ -30,6 +30,8 @@ var sounds = {
 	"door_toggle": "res://Music/SoundResource/Minifantasy_Dungeon_SFX/04_sack_open_1.wav", # apply
 	"stone_impact": "res://Music/SoundResource/SFX-1/stone_impact.ogg", # apply
 	"stone_lift": "res://Music/SoundResource/SFX-1/stone_lift.ogg",
+	"button_hovered": "res://Music/SoundResource/SFX-1/UI1.wav",
+	"button_pressed": "res://Music/SoundResource/SFX-1/UI2.wav",
 	
 	"background_music": "res://Music/SoundResource/SFX-1/Pulse_Shape_Backgrond_Music.wav"
 }

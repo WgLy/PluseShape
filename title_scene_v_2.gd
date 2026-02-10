@@ -54,6 +54,7 @@ func _ready():
 	
 	# 3. 啟動自動流動線條系統
 	_init_flow_lines_system()
+	# SoundManager.play_music("background_music", 0.0, 1.0)
 
 # ==========================================
 #  核心修改：獨立循環系統
@@ -150,6 +151,7 @@ func _on_button_hover(btn: Area2D):
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_CUBIC)
 	tween.tween_property(btn, "modulate", COLOR_HOVER, 0.2)
 	tween.tween_property(btn, "position:y", btn_original_pos[btn].y - 10, 0.2)
+	SoundManager.play_sfx("button_hovered", 0.0, 1.0)
 
 func _on_button_exit(btn: Area2D):
 	var tween = create_tween().set_parallel(true)
@@ -166,13 +168,17 @@ func _on_button_input(viewport: Node, event: InputEvent, shape_idx: int, btn: Ar
 
 func _on_start_pressed():
 	print("Start Pressed")
-	create_flowing_line(start_btn.position, exit_btn.position, 5.0, Color.YELLOW, 0.5)
+	SoundManager.play_sfx("button_pressed", 0.0, 1.0)
+	SceneTransition.change_scene("res://world.tscn")
 
 func _on_settings_pressed():
+	SoundManager.play_sfx("button_pressed", 0.0, 1.0)
 	print("Settings Pressed")
 
 func _on_exit_pressed():
 	print("Exit Pressed")
+	SoundManager.play_sfx("button_pressed", 0.0, 1.0)
+	get_tree().quit()
 
 func _animate_title_bar():
 	var pos_tween = create_tween().set_loops()

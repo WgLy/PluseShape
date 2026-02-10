@@ -79,7 +79,7 @@ func play_sfx(sfx, pitch_scale: float = 1.0, pitch_variation: float = 0.1):
 	player.stream = stream
 	player.bus = "SFX"
 	
-	var final_pitch = pitch_scale + randf_range(-pitch_variation, pitch_variation)
+	var final_pitch = pitch_scale # + randf_range(-pitch_variation, pitch_variation)
 	player.pitch_scale = final_pitch
 	
 	add_child(player)

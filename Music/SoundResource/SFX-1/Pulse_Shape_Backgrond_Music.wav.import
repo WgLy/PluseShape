@@ -2,7 +2,7 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://susw2tory0q8"
+uid="uid://p0bxly347dgd"
 path="res://.godot/imported/Pulse_Shape_Backgrond_Music.wav-4868ee9fcdd9882d179105e7b63d1b48.sample"
 
 [deps]
@@ -18,7 +18,7 @@ force/max_rate=false
 force/max_rate_hz=44100
 edit/trim=false
 edit/normalize=false
-edit/loop_mode=2
+edit/loop_mode=0
 edit/loop_begin=0
 edit/loop_end=-1
 compress/mode=2
