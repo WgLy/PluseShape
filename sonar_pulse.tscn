@@ -3,8 +3,8 @@
 [ext_resource type="Script" uid="uid://blnok07kgnanm" path="res://sonar_pulse.gd" id="1_obv3f"]
 
 [sub_resource type="Gradient" id="Gradient_5bhkd"]
-offsets = PackedFloat32Array(0, 0.10666667, 0.42666668, 0.97333336)
-colors = PackedColorArray(0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
+offsets = PackedFloat32Array(0, 0.10666667, 0.42666668, 0.73333335)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_wlb7i"]
 gradient = SubResource("Gradient_5bhkd")
@@ -17,5 +17,7 @@ fill_to = Vector2(0, 0)
 [node name="SonarPulse" type="PointLight2D"]
 scale = Vector2(0.1, 0.1)
 shadow_enabled = true
+shadow_filter = 2
+shadow_filter_smooth = 0.1
 texture = SubResource("GradientTexture2D_wlb7i")
 script = ExtResource("1_obv3f")
